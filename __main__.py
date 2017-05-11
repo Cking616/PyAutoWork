@@ -16,14 +16,32 @@ import os.path
 import xlwt
 
 
+def generate_style():
+    borders = xlwt.Borders()  # Create Borders
+    borders.left = xlwt.Borders.THIN  # May be: NO_LINE, THIN, MEDIUM, DASHED, DOTTED, THICK, DOUBLE, HAIR, MEDIUM_DASHED, THIN_DASH_DOTTED, MEDIUM_DASH_DOTTED, THIN_DASH_DOT_DOTTED, MEDIUM_DASH_DOT_DOTTED, SLANTED_MEDIUM_DASH_DOTTED, or 0x00 through 0x0D.
+    borders.right = xlwt.Borders.THIN
+    borders.top = xlwt.Borders.THIN
+    borders.bottom = xlwt.Borders.THIN
+    borders.left_colour = 0x40
+    borders.right_colour = 0x40
+    borders.top_colour = 0x40
+    borders.bottom_colour = 0x40
+
+    alignment = xlwt.Alignment()  # Create Alignment
+    alignment.horz = xlwt.Alignment.HORZ_CENTER  # May be: HORZ_GENERAL, HORZ_LEFT, HORZ_CENTER, HORZ_RIGHT, HORZ_FILLED, HORZ_JUSTIFIED, HORZ_CENTER_ACROSS_SEL, HORZ_DISTRIBUTED
+    alignment.vert = xlwt.Alignment.VERT_CENTER  # May be: VERT_TOP, VERT_CENTER, VERT_BOTTOM, VERT_JUSTIFIED, VERT_DISTRIBUTED
+
+    style = xlwt.XFStyle()  # Create Style
+    style.borders = borders  # Add Borders to Style
+    style.alignment = alignment  # Add Alignment to Style
+    return style
+
+
 def analysis_original_file(original_filename, raw_filename, target_year, target_month):
     original_file = open(original_filename)
-
-    # current_year = 2000
-    # current_month = 0
+    work_day = set()
     raw_dict = defaultdict(set)
     for line in original_file:
-        # line = re.sub(r'[^0-9]+', ' ', line)
         line = line.strip()
         identify, year, month, day, *rev = re.split(r'[\s-]\s*', line)
         if int(year) != target_year:
@@ -31,34 +49,47 @@ def analysis_original_file(original_filename, raw_filename, target_year, target_
         if int(month) != target_month:
             continue
         raw_dict[identify].add(day)
+        work_day.add(int(day))
 
     with open(raw_filename, 'wt') as raw_file:
         for key in raw_dict:
             for day in raw_dict[key]:
-                txt = key + ' ' +  day + '\n'
+                txt = key + ' ' + day + '\n'
                 raw_file.write(txt)
+    return work_day
 
 
-def dat2xls(in_filename, out_filename):
+def dat2xls(in_filename, out_filename, work_day):
     raw_file = open(in_filename)
+    style = generate_style()
 
     raw_dict = defaultdict(set)
     for line in raw_file:
         line.strip('')
         identify,  day, *rev = re.split(r'[\s-]\s*', line)
-        raw_dict[identify].add(day)
+        raw_dict[int(identify)].add(int(day))
 
     workbook = xlwt.Workbook(encoding='utf-8')
     worksheet = workbook.add_sheet('sheet1')
 
-    for i in range(1, 32):
-        worksheet.write(0, i + 1, i)
+    index = 2
+    for i in work_day:
+        worksheet.write(2, index, i, style)
+        index = index + 1
 
-    for key in raw_dict:
-        index = int(key) + 2
-        worksheet.write(index, 0, int(key))
-        for day in raw_dict[key]:
-            worksheet.write(index, int(day) + 1, '\u221a')
+    index = 3
+    while len(raw_dict) != 0:
+        key = min(raw_dict.keys())
+        worksheet.write(index, 0, key, style)
+        y = 2
+        for i in work_day:
+            if i in raw_dict[key]:
+                worksheet.write(index, y, '\u221a', style)
+            else:
+                worksheet.write(index, y, ' ', style)
+            y = y + 1
+        raw_dict.pop(key)
+        index = index + 1
 
     if not out_filename.endswith('.xls'):
         out_filename = out_filename + '.xls'
@@ -82,7 +113,7 @@ def translate_process():
     input_choice = int(input("请选择要使用的dat文件，输入之前的数字号\n"))
     while input_choice < 1 or input_choice > num_of_file:
         input_choice = int(input("输入的数字不在范围内，请重新输入\n"))
-    original_filename =  './dat/'+ dat_file_list[input_choice - 1]
+    original_filename = './dat/' + dat_file_list[input_choice - 1]
 
     input_choice = int(input("请输入筛选的年份(范围2000到2030)\n"))
     while input_choice < 2000 or input_choice > 2030:
@@ -102,8 +133,8 @@ def translate_process():
 
     txt = "并在excel文件下生成" + raw_filename + '\n'
     print(txt)
-    analysis_original_file(original_filename, raw_filename, target_year, target_month)
-    dat2xls(raw_filename, xls_filename)
+    work_day = analysis_original_file(original_filename, raw_filename, target_year, target_month)
+    dat2xls(raw_filename, xls_filename, work_day)
 
 
 if __name__ == '__main__':
