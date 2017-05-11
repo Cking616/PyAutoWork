@@ -11,6 +11,8 @@
 """
 import re
 from collections import defaultdict
+import os
+import os.path
 import xlwt
 
 
@@ -63,7 +65,47 @@ def dat2xls(in_filename, out_filename):
     workbook.save(out_filename)
 
 
+def translate_process():
+    print("用法：第一步，将dat记录文件放到dat文件夹下\n")
+    input("完成后请按Enter继续\n")
+
+    print("请选择要使用的dat文件，输入之前的数字号\n")
+    dat_file_list = []
+    num_of_file = 0
+    for parent, dir_names, file_names in os.walk('dat'):
+        for file_name in file_names:
+            dat_file_list.append(file_name)
+            num_of_file = num_of_file + 1
+            txt = str(num_of_file) + ' ' + file_name + '\n'
+            print(txt)
+
+    input_choice = int(input("请选择要使用的dat文件，输入之前的数字号\n"))
+    while input_choice < 1 or input_choice > num_of_file:
+        input_choice = int(input("输入的数字不在范围内，请重新输入\n"))
+    original_filename =  './dat/'+ dat_file_list[input_choice - 1]
+
+    input_choice = int(input("请输入筛选的年份(范围2000到2030)\n"))
+    while input_choice < 2000 or input_choice > 2030:
+        input_choice = int(input("输入的数字不在范围内，请重新输入\n"))
+    target_year = input_choice
+
+    input_choice = int(input("请输入筛选的月份(范围1到12)\n"))
+    while input_choice < 1 or input_choice > 12:
+        input_choice = int(input("输入的数字不在范围内，请重新输入\n"))
+    target_month = input_choice
+
+    raw_filename = './txt/' + str(target_year) + '-' + str(target_month) + '.txt'
+    xls_filename = './excel/' + str(target_year) + '-' + str(target_month) + '.xls'
+
+    txt = "在txt文件夹下生成" + raw_filename + '\n'
+    print(txt)
+
+    txt = "并在excel文件下生成" + raw_filename + '\n'
+    print(txt)
+    analysis_original_file(original_filename, raw_filename, target_year, target_month)
+    dat2xls(raw_filename, xls_filename)
+
+
 if __name__ == '__main__':
-    analysis_original_file('D:/Downloads/1_attlog.dat', '4.txt', 2017, 4)
-    dat2xls('4.txt', 'text_xls4.xls')
-    pass
+    translate_process()
+    input("请按Enter键继续\n")
