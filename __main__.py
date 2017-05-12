@@ -18,7 +18,11 @@ import xlwt
 
 def generate_style():
     borders = xlwt.Borders()  # Create Borders
-    borders.left = xlwt.Borders.THIN  # May be: NO_LINE, THIN, MEDIUM, DASHED, DOTTED, THICK, DOUBLE, HAIR, MEDIUM_DASHED, THIN_DASH_DOTTED, MEDIUM_DASH_DOTTED, THIN_DASH_DOT_DOTTED, MEDIUM_DASH_DOT_DOTTED, SLANTED_MEDIUM_DASH_DOTTED, or 0x00 through 0x0D.
+    borders.left = xlwt.Borders.THIN
+    """
+    # May be: NO_LINE, THIN, MEDIUM, DASHED, DOTTED, THICK, DOUBLE, HAIR, MEDIUM_DASHED, THIN_DASH_DOTTED, 
+    MEDIUM_DASH_DOTTED, THIN_DASH_DOT_DOTTED, MEDIUM_DASH_DOT_DOTTED, SLANTED_MEDIUM_DASH_DOTTED, or 0x00 through 0x0D.
+    """
     borders.right = xlwt.Borders.THIN
     borders.top = xlwt.Borders.THIN
     borders.bottom = xlwt.Borders.THIN
@@ -28,8 +32,13 @@ def generate_style():
     borders.bottom_colour = 0x40
 
     alignment = xlwt.Alignment()  # Create Alignment
-    alignment.horz = xlwt.Alignment.HORZ_CENTER  # May be: HORZ_GENERAL, HORZ_LEFT, HORZ_CENTER, HORZ_RIGHT, HORZ_FILLED, HORZ_JUSTIFIED, HORZ_CENTER_ACROSS_SEL, HORZ_DISTRIBUTED
-    alignment.vert = xlwt.Alignment.VERT_CENTER  # May be: VERT_TOP, VERT_CENTER, VERT_BOTTOM, VERT_JUSTIFIED, VERT_DISTRIBUTED
+    alignment.horz = xlwt.Alignment.HORZ_CENTER
+    """
+    # May be: HORZ_GENERAL, HORZ_LEFT, HORZ_CENTER, HORZ_RIGHT, HORZ_FILLED, HORZ_JUSTIFIED, 
+      HORZ_CENTER_ACROSS_SEL, HORZ_DISTRIBUTED
+    """
+    alignment.vert = xlwt.Alignment.VERT_CENTER
+    # May be: VERT_TOP, VERT_CENTER, VERT_BOTTOM, VERT_JUSTIFIED, VERT_DISTRIBUTED
 
     font = xlwt.Font()
     font.name = 'SimSun'  # Ö¸¶¨¡°ËÎÌå¡±
