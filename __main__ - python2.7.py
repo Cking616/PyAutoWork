@@ -136,8 +136,8 @@ def translate_process():
         os.mkdir('excel')
     if not os.path.exists('txt'):
         os.mkdir('txt')
-    raw_input("完成后请按Enter继续\n".decode('gbk'))
-
+    raw_input("完成后请按Enter继续\n".decode('gbk').encode('gbk'))
+	
     print("请选择要使用的dat文件，输入之前的数字号\n".decode('gbk'))
     dat_file_list = []
     num_of_file = 0
@@ -148,23 +148,23 @@ def translate_process():
             txt = str(num_of_file) + ' ' + file_name + '\n'
             print(txt)
 
-    input_choice = int(raw_input("请选择要使用的dat文件，输入之前的数字号\n".decode('gbk')))
+    input_choice = int(raw_input("请选择要使用的dat文件，输入之前的数字号\n".decode('gbk').encode('gbk')))
     while input_choice < 1 or input_choice > num_of_file:
-        input_choice = int(raw_input("输入的数字不在范围内，请重新输入\n".decode('gbk')))
+        input_choice = int(raw_input("输入的数字不在范围内，请重新输入\n".decode('gbk').encode('gbk')))
     original_filename = './dat/' + dat_file_list[input_choice - 1]
 
-    input_choice = int(raw_input("请输入筛选的年份(范围2000到2030)\n".decode('gbk')))
+    input_choice = int(raw_input("请输入筛选的年份(范围2000到2030)\n".decode('gbk').encode('gbk')))
     while input_choice < 2000 or input_choice > 2030:
-        input_choice = int(raw_input("输入的数字不在范围内，请重新输入\n".decode('gbk')))
+        input_choice = int(raw_input("输入的数字不在范围内，请重新输入\n".decode('gbk').encode('gbk')))
     target_year = input_choice
 
     print("以下为循环选择，0退出".decode('gbk'))
     while input_choice != 0:
-        input_choice = int(raw_input("请输入筛选的月份(范围1到12),输入0退出\n".decode('gbk')))
+        input_choice = int(raw_input("请输入筛选的月份(范围1到12),输入0退出\n".decode('gbk').encode('gbk')))
         if input_choice == 0:
             break
         while input_choice < 1 or input_choice > 12:
-            input_choice = int(raw_input("输入的数字不在范围内，请重新输入\n".decode('gbk')))
+            input_choice = int(raw_input("输入的数字不在范围内，请重新输入\n".decode('gbk').encode('gbk')))
         target_month = input_choice
 
         raw_filename = './txt/' + str(target_year) + '-' + str(target_month) + '.txt'
