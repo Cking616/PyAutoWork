@@ -1,4 +1,4 @@
-# -*- coding: gbk -*-
+# -*- coding: utf-8 -*-
 
 """
 @version: 1.0
@@ -95,7 +95,7 @@ def dat2xls(in_filename, out_filename, work_day):
     for i in work_day:
         worksheet.write(2, index, i, style)
         index = index + 1
-    txt = '缺席'.decode('gbk')
+    txt = '缺席'.decode('utf-8')
     worksheet.write(2, index,  txt, style)
 
     index = 3
@@ -114,14 +114,14 @@ def dat2xls(in_filename, out_filename, work_day):
         raw_dict.pop(key)
         index = index + 1
 
-    txt = '工号'.decode('gbk')
+    txt = '工号'.decode('utf-8')
     worksheet.write_merge(1, 2, 0, 0, txt, style)  # Merges row 0's columns 0 through 3.
-    txt = '姓名'.decode('gbk')
+    txt = '姓名'.decode('utf-8')
     worksheet.write_merge(1, 2, 1, 1,  txt, style)  # Merges row 0's columns 0 through 3.
     lens = len(work_day)
-    txt = '考勤情况'.decode('gbk')
+    txt = '考勤情况'.decode('utf-8')
     worksheet.write_merge(1, 1, 2, lens + 2,  txt, style)  # Merges row 1 through 2's columns 0 through 3.
-    txt = '考勤系统录入'.decode('gbk')
+    txt = '考勤系统录入'.decode('utf-8')
     worksheet.write_merge(0, 0, 0, lens + 2,  txt, style)  # Merges row 1 through 2's columns 0 through 3.
     if not out_filename.endswith('.xls'):
         out_filename = out_filename + '.xls'
@@ -129,16 +129,16 @@ def dat2xls(in_filename, out_filename, work_day):
 
 
 def translate_process():
-    print("用法：第一步，将dat记录文件放到当前目录下生成的dat文件夹下\n".decode('gbk'))
+    print("用法：第一步，将dat记录文件放到当前目录下生成的dat文件夹下\n".decode('utf-8'))
     if not os.path.exists('dat'):
         os.mkdir('dat')
     if not os.path.exists('excel'):
         os.mkdir('excel')
     if not os.path.exists('txt'):
         os.mkdir('txt')
-    raw_input("完成后请按Enter继续\n".decode('gbk').encode('gbk'))
+    raw_input("完成后请按Enter继续\n".decode('utf-8').encode('gbk'))
 	
-    print("请选择要使用的dat文件，输入之前的数字号\n".decode('gbk'))
+    print("请选择要使用的dat文件，输入之前的数字号\n".decode('utf-8'))
     dat_file_list = []
     num_of_file = 0
     for parent, dir_names, file_names in os.walk('dat'):
@@ -148,32 +148,32 @@ def translate_process():
             txt = str(num_of_file) + ' ' + file_name + '\n'
             print(txt)
 
-    input_choice = int(raw_input("请选择要使用的dat文件，输入之前的数字号\n".decode('gbk').encode('gbk')))
+    input_choice = int(raw_input("请选择要使用的dat文件，输入之前的数字号\n".decode('utf-8').encode('gbk')).encode('gbk'))
     while input_choice < 1 or input_choice > num_of_file:
-        input_choice = int(raw_input("输入的数字不在范围内，请重新输入\n".decode('gbk').encode('gbk')))
+        input_choice = int(raw_input("输入的数字不在范围内，请重新输入\n".decode('utf-8').encode('gbk')).encode('gbk'))
     original_filename = './dat/' + dat_file_list[input_choice - 1]
 
-    input_choice = int(raw_input("请输入筛选的年份(范围2000到2030)\n".decode('gbk').encode('gbk')))
+    input_choice = int(raw_input("请输入筛选的年份(范围2000到2030)\n".decode('utf-8').encode('gbk')).encode('gbk'))
     while input_choice < 2000 or input_choice > 2030:
-        input_choice = int(raw_input("输入的数字不在范围内，请重新输入\n".decode('gbk').encode('gbk')))
+        input_choice = int(raw_input("输入的数字不在范围内，请重新输入\n".decode('utf-8').encode('gbk')).encode('gbk'))
     target_year = input_choice
 
-    print("以下为循环选择，0退出".decode('gbk'))
+    print("以下为循环选择，0退出".decode('utf-8'))
     while input_choice != 0:
-        input_choice = int(raw_input("请输入筛选的月份(范围1到12),输入0退出\n".decode('gbk').encode('gbk')))
+        input_choice = int(raw_input("请输入筛选的月份(范围1到12),输入0退出\n".decode('utf-8').encode('gbk')).encode('gbk'))
         if input_choice == 0:
             break
         while input_choice < 1 or input_choice > 12:
-            input_choice = int(raw_input("输入的数字不在范围内，请重新输入\n".decode('gbk').encode('gbk')))
+            input_choice = int(raw_input("输入的数字不在范围内，请重新输入\n".decode('utf-8').encode('gbk')).encode('gbk'))
         target_month = input_choice
 
         raw_filename = './txt/' + str(target_year) + '-' + str(target_month) + '.txt'
         xls_filename = './excel/' + str(target_year) + '-' + str(target_month) + '.xls'
 
-        txt = "在txt文件夹下生成".decode('gbk') + raw_filename + '\n'
+        txt = "在txt文件夹下生成".decode('utf-8') + raw_filename + '\n'
         print(txt)
 
-        txt = "并在excel文件下生成".decode('gbk') + raw_filename + '\n'
+        txt = "并在excel文件下生成".decode('utf-8') + raw_filename + '\n'
         print(txt)
         work_day = analysis_original_file(original_filename, raw_filename, target_year, target_month)
         dat2xls(raw_filename, xls_filename, work_day)
@@ -181,4 +181,4 @@ def translate_process():
 
 if __name__ == '__main__':
     translate_process()
-    raw_input("请按Enter键继续\n".decode('gbk'))
+    raw_input("请按Enter键继续\n".decode('utf-8').encode('gbk'))
