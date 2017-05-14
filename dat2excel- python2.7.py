@@ -41,7 +41,7 @@ def generate_style():
     # May be: VERT_TOP, VERT_CENTER, VERT_BOTTOM, VERT_JUSTIFIED, VERT_DISTRIBUTED
 
     font = xlwt.Font()
-    font.name = 'SimSun'  # Ö¸¶¨¡°ËÎÌå¡±
+    font.name = 'SimSun'  # æŒ‡å®šâ€œå®‹ä½“â€
 
     style = xlwt.XFStyle()  # Create Style
     style.borders = borders  # Add Borders to Style
@@ -95,7 +95,7 @@ def dat2xls(in_filename, out_filename, work_day):
     for i in work_day:
         worksheet.write(2, index, i, style)
         index = index + 1
-    txt = 'È±Ï¯'.decode('gbk')
+    txt = 'ç¼ºå¸­'.decode('gbk')
     worksheet.write(2, index,  txt, style)
 
     index = 3
@@ -114,14 +114,14 @@ def dat2xls(in_filename, out_filename, work_day):
         raw_dict.pop(key)
         index = index + 1
 
-    txt = '¹¤ºÅ'.decode('gbk')
+    txt = 'å·¥å·'.decode('gbk')
     worksheet.write_merge(1, 2, 0, 0, txt, style)  # Merges row 0's columns 0 through 3.
-    txt = 'ĞÕÃû'.decode('gbk')
+    txt = 'å§“å'.decode('gbk')
     worksheet.write_merge(1, 2, 1, 1,  txt, style)  # Merges row 0's columns 0 through 3.
     lens = len(work_day)
-    txt = '¿¼ÇÚÇé¿ö'.decode('gbk')
+    txt = 'è€ƒå‹¤æƒ…å†µ'.decode('gbk')
     worksheet.write_merge(1, 1, 2, lens + 2,  txt, style)  # Merges row 1 through 2's columns 0 through 3.
-    txt = '¿¼ÇÚÏµÍ³Â¼Èë'.decode('gbk')
+    txt = 'è€ƒå‹¤ç³»ç»Ÿå½•å…¥'.decode('gbk')
     worksheet.write_merge(0, 0, 0, lens + 2,  txt, style)  # Merges row 1 through 2's columns 0 through 3.
     if not out_filename.endswith('.xls'):
         out_filename = out_filename + '.xls'
@@ -129,16 +129,16 @@ def dat2xls(in_filename, out_filename, work_day):
 
 
 def translate_process():
-    print("ÓÃ·¨£ºµÚÒ»²½£¬½«dat¼ÇÂ¼ÎÄ¼ş·Åµ½µ±Ç°Ä¿Â¼ÏÂÉú³ÉµÄdatÎÄ¼ş¼ĞÏÂ\n".decode('gbk'))
+    print("ç”¨æ³•ï¼šç¬¬ä¸€æ­¥ï¼Œå°†datè®°å½•æ–‡ä»¶æ”¾åˆ°å½“å‰ç›®å½•ä¸‹ç”Ÿæˆçš„datæ–‡ä»¶å¤¹ä¸‹\n".decode('gbk'))
     if not os.path.exists('dat'):
         os.mkdir('dat')
     if not os.path.exists('excel'):
         os.mkdir('excel')
     if not os.path.exists('txt'):
         os.mkdir('txt')
-    raw_input("Íê³ÉºóÇë°´Enter¼ÌĞø\n".decode('gbk').encode('gbk'))
+    raw_input("å®Œæˆåè¯·æŒ‰Enterç»§ç»­\n".decode('gbk').encode('gbk'))
 	
-    print("ÇëÑ¡ÔñÒªÊ¹ÓÃµÄdatÎÄ¼ş£¬ÊäÈëÖ®Ç°µÄÊı×ÖºÅ\n".decode('gbk'))
+    print("è¯·é€‰æ‹©è¦ä½¿ç”¨çš„datæ–‡ä»¶ï¼Œè¾“å…¥ä¹‹å‰çš„æ•°å­—å·\n".decode('gbk'))
     dat_file_list = []
     num_of_file = 0
     for parent, dir_names, file_names in os.walk('dat'):
@@ -148,32 +148,32 @@ def translate_process():
             txt = str(num_of_file) + ' ' + file_name + '\n'
             print(txt)
 
-    input_choice = int(raw_input("ÇëÑ¡ÔñÒªÊ¹ÓÃµÄdatÎÄ¼ş£¬ÊäÈëÖ®Ç°µÄÊı×ÖºÅ\n".decode('gbk').encode('gbk')))
+    input_choice = int(raw_input("è¯·é€‰æ‹©è¦ä½¿ç”¨çš„datæ–‡ä»¶ï¼Œè¾“å…¥ä¹‹å‰çš„æ•°å­—å·\n".decode('gbk').encode('gbk')))
     while input_choice < 1 or input_choice > num_of_file:
-        input_choice = int(raw_input("ÊäÈëµÄÊı×Ö²»ÔÚ·¶Î§ÄÚ£¬ÇëÖØĞÂÊäÈë\n".decode('gbk').encode('gbk')))
+        input_choice = int(raw_input("è¾“å…¥çš„æ•°å­—ä¸åœ¨èŒƒå›´å†…ï¼Œè¯·é‡æ–°è¾“å…¥\n".decode('gbk').encode('gbk')))
     original_filename = './dat/' + dat_file_list[input_choice - 1]
 
-    input_choice = int(raw_input("ÇëÊäÈëÉ¸Ñ¡µÄÄê·İ(·¶Î§2000µ½2030)\n".decode('gbk').encode('gbk')))
+    input_choice = int(raw_input("è¯·è¾“å…¥ç­›é€‰çš„å¹´ä»½(èŒƒå›´2000åˆ°2030)\n".decode('gbk').encode('gbk')))
     while input_choice < 2000 or input_choice > 2030:
-        input_choice = int(raw_input("ÊäÈëµÄÊı×Ö²»ÔÚ·¶Î§ÄÚ£¬ÇëÖØĞÂÊäÈë\n".decode('gbk').encode('gbk')))
+        input_choice = int(raw_input("è¾“å…¥çš„æ•°å­—ä¸åœ¨èŒƒå›´å†…ï¼Œè¯·é‡æ–°è¾“å…¥\n".decode('gbk').encode('gbk')))
     target_year = input_choice
 
-    print("ÒÔÏÂÎªÑ­»·Ñ¡Ôñ£¬0ÍË³ö".decode('gbk'))
+    print("ä»¥ä¸‹ä¸ºå¾ªç¯é€‰æ‹©ï¼Œ0é€€å‡º".decode('gbk'))
     while input_choice != 0:
-        input_choice = int(raw_input("ÇëÊäÈëÉ¸Ñ¡µÄÔÂ·İ(·¶Î§1µ½12),ÊäÈë0ÍË³ö\n".decode('gbk').encode('gbk')))
+        input_choice = int(raw_input("è¯·è¾“å…¥ç­›é€‰çš„æœˆä»½(èŒƒå›´1åˆ°12),è¾“å…¥0é€€å‡º\n".decode('gbk').encode('gbk')))
         if input_choice == 0:
             break
         while input_choice < 1 or input_choice > 12:
-            input_choice = int(raw_input("ÊäÈëµÄÊı×Ö²»ÔÚ·¶Î§ÄÚ£¬ÇëÖØĞÂÊäÈë\n".decode('gbk').encode('gbk')))
+            input_choice = int(raw_input("è¾“å…¥çš„æ•°å­—ä¸åœ¨èŒƒå›´å†…ï¼Œè¯·é‡æ–°è¾“å…¥\n".decode('gbk').encode('gbk')))
         target_month = input_choice
 
         raw_filename = './txt/' + str(target_year) + '-' + str(target_month) + '.txt'
         xls_filename = './excel/' + str(target_year) + '-' + str(target_month) + '.xls'
 
-        txt = "ÔÚtxtÎÄ¼ş¼ĞÏÂÉú³É".decode('gbk') + raw_filename + '\n'
+        txt = "åœ¨txtæ–‡ä»¶å¤¹ä¸‹ç”Ÿæˆ".decode('gbk') + raw_filename + '\n'
         print(txt)
 
-        txt = "²¢ÔÚexcelÎÄ¼şÏÂÉú³É".decode('gbk') + raw_filename + '\n'
+        txt = "å¹¶åœ¨excelæ–‡ä»¶ä¸‹ç”Ÿæˆ".decode('gbk') + raw_filename + '\n'
         print(txt)
         work_day = analysis_original_file(original_filename, raw_filename, target_year, target_month)
         dat2xls(raw_filename, xls_filename, work_day)
@@ -181,4 +181,4 @@ def translate_process():
 
 if __name__ == '__main__':
     translate_process()
-    raw_input("Çë°´Enter¼ü¼ÌĞø\n".decode('gbk'))
+    raw_input("è¯·æŒ‰Enteré”®ç»§ç»­\n".decode('gbk'))
