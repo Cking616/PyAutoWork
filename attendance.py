@@ -22,10 +22,6 @@ class Attendance:
         driver.find_element_by_id("ddd").click()
         driver.get('http://172.16.3.241:8060/employeeConsols/index_emp.aspx')
 
-    def get_exception_record(self):
-        driver = self.driver
-        driver.find_element_by_link_text('')
-
 
 if __name__ == '__main__':
     my_attendance = Attendance()
